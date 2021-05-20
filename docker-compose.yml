@@ -3,6 +3,8 @@ services:
   mail:
     image: bytemark/smtp
     restart: always
+    networks:
+      - plausible
 
   plausible_db:
     image: postgres:12
@@ -10,7 +12,9 @@ services:
       - db-data:/var/lib/postgresql/data
     environment:
       - POSTGRES_PASSWORD=postgres
-
+    networks:
+      - plausible
+      
   plausible_events_db:
     image: yandex/clickhouse-server:21.3.2.5
     volumes:
@@ -21,6 +25,8 @@ services:
       nofile:
         soft: 262144
         hard: 262144
+    networks:
+      - plausible
 
   plausible:
     image: plausible/analytics:latest
@@ -33,6 +39,7 @@ services:
       - 8000:8000
     networks:
       - main
+      - plausible
     env_file:
       - plausible-conf.env
 
@@ -46,6 +53,7 @@ volumes:
 
 
 networks:
+  plausible:
   main:
     name: ${NETWORK_NAME}
     external: true
