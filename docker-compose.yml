@@ -31,6 +31,8 @@ services:
       - mail
     ports:
       - 8000:8000
+    networks:
+      - main
     env_file:
       - plausible-conf.env
 
@@ -41,3 +43,9 @@ volumes:
     driver: local
   geoip:
     driver: local
+
+
+networks:
+  main:
+    name: ${NETWORK_NAME}
+    external: true
