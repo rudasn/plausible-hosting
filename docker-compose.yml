@@ -1,4 +1,4 @@
-version: "3.3"
+version: "2.4"
 services:
   mail:
     image: bytemark/smtp
@@ -32,7 +32,7 @@ services:
     ports:
       - 8000:8000
     networks:
-      main: {}
+      - ${NETWORK_NAME}
     env_file:
       - plausible-conf.env
 
